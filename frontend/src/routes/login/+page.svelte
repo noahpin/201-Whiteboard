@@ -135,7 +135,7 @@
     <input type="text" id="username" name="username" bind:value={username}  
            placeholder="johndoe1"><br><br>
     
-    
+
     <!-- Validation for password, but doesn't work for guest 
          pattern="[A-Za-z ]{3,}" -->
     <label for="password">Password</label>
@@ -146,15 +146,15 @@
     <div class="radio-group">
   <label>I want to</label>
   <div class="radio-option">
-    <input type="radio" id="register" name="action" value="register" checked>
+    <input type="radio" id="register" name="action" value="register" bind:group={action} checked>
     <label for="register">Register as a new user</label>
   </div>
   <div class="radio-option">
-    <input type="radio" id="login" name="action" value="login">
+    <input type="radio" id="login" name="action" value="login" bind:group={action}>
     <label for="login">Login as an existing user</label>
   </div>
   <div class="radio-option">
-    <input type="radio" id="guest" name="action" value="guest">
+    <input type="radio" id="guest" name="action" value="guest" bind:group={action}>
     <label for="guest">Continue as guest</label>
   </div>
 </div>
