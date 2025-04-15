@@ -12,24 +12,28 @@
     // Example Whiteboard Array with Dummy Values
     let whiteboards = [
         {
+            id: "csci-201",
             title: "CSCI 201 Planning Board",
             author: "Noah Pinales",
             updated: "12:53 pm",
             date: null,
         },
         {
+            id: "ee-250",
             title: "EE 250 Notes",
             author: "Noah Pinales",
             updated: "12:53 pm",
             date: null,
         },
         {
+            id: "board-3",
             title: "Board board board",
             author: "Noah Pinales",
             updated: "8:00 pm",
             date: null,
         },
         {
+            id: "board-2",
             title: "Board Board",
             author: "Noah Pinales",
             updated: "12:53 pm",
@@ -38,15 +42,23 @@
     ];
 </script>
 
-<div class="whiteboards-page">
+<div class="whiteboards-page container">
     <div class="header">
-        <h1>Whiteboards</h1>
-        <button class="create-btn">CREATE WHITEBOARD</button>
+        <div class="left-group">
+            <h1>Whiteboards</h1>
+            <button class="create-btn">CREATE WHITEBOARD</button>
+        </div>
+        <div class="username">Username</div>
+        <div class="left-group">
+            <h1>Whiteboards</h1>
+            <button class="create-btn">CREATE WHITEBOARD</button>
+        </div>
+        <div class="username">Username</div>
     </div>
 
     <div class="whiteboard-list">
         {#each whiteboards as board}
-            <div class="whiteboard-entry">
+            <a class="whiteboard-entry" href={`/whiteboard/${board.id}`}>
                 <div class="info">
                     <div class="title">{board.title}</div>
                     <div class="author">By: {board.author}</div>
@@ -58,7 +70,7 @@
                         Updated {board.date}
                     {/if}
                 </div>
-            </div>
+            </a>
         {/each}
     </div>
 </div>
@@ -68,6 +80,11 @@
         padding: 2rem;
         font-family: sans-serif;
     }
+    
+    .container {
+        max-width: 70vw;
+        margin: 0 auto;
+    }
 
     .header {
         display: flex;
@@ -76,17 +93,40 @@
         margin-bottom: 1.5rem;
     }
 
+    .left-group {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .username {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    .left-group {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .username {
+        font-size: 1rem;
+        color: #666;
+    }
+
     .header h1 {
-        font-size: 1.75rem;
-        font-weight: 600;
+        font-size: 2rem;
+        font-weight: 400;
     }
 
     .create-btn {
         background-color: #e2e2e2;
         border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        font-weight: 500;
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        font-weight: 800;
+        font-size: 0.9rem;
         cursor: pointer;
     }
 
@@ -97,29 +137,53 @@
     .whiteboard-list {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        border-bottom: 1px solid #e0e0e0;
     }
 
     .whiteboard-entry {
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid #e0e0e0;
-        padding-bottom: 0.75rem;
+        align-items: center;
+        width: 100%;
+        border-top: 1px solid #e0e0e0;
+        padding: 0.75rem 0;
+        font-size: 1rem;
+        flex-wrap: wrap;
+        text-decoration: none;
+        color: inherit;
     }
 
-    .info .title {
+    .whiteboard-entry:hover {
+        background-color: #f9f9f9;
+        cursor: pointer;
+    }
+
+    .info {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        align-items: baseline;
+    }
+
+    .title {
         font-weight: 500;
+        padding-left: 1rem;
     }
 
-    .info .author {
-        font-size: 0.875rem;
-        color: #666;
+    .author {
+        color: #888;
+        font-size: 0.95rem;
+        font-weight: 400;
+    .author {
+        color: #888;
+        font-size: 0.95rem;
+        font-weight: 400;
     }
 
     .updated {
-        font-size: 0.875rem;
+        font-size: 0.9rem;
+        font-size: 0.9rem;
         color: #666;
-        align-self: center;
     }
 </style>
 
