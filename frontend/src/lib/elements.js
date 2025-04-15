@@ -66,5 +66,31 @@ export class TextElement extends Element {
      */
     constructor(content, properties) {
         super('text', content, properties);
+        this.text = content;
+    }
+}
+
+export class PenElement extends Element {
+
+    /**
+     * BrushElement class that extends the base Element class
+     * 
+     * @param {string} content - the brush content of the element
+     * @param {Object} properties - additional properties for the element
+     */
+    constructor(content, properties) {
+        super('pen', content, properties);
+        this.path = content.path;
+    }
+    /**
+     * add a point to the path of the pen element
+     * @param {number} x - the global x coordinate of the point
+     * @param {number} y - the global y coordinate of the point
+     */
+    addPointToPath(x, y) {
+        this.renderPath();
+    }
+    renderPath() {
+
     }
 }

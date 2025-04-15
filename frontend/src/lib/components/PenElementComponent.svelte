@@ -7,9 +7,8 @@
 		elementY = $bindable(0),
 		elementData = $bindable(null),
 	} = $props();
+    $inspect(elementData);
 </script>
 
 <GrabbableElement {panX} {panY} bind:elementData>
-    
-	<div contenteditable="true">asdiuhfoaushdfiasuhdfiasuhdfiaushdf text</div>
 </GrabbableElement>

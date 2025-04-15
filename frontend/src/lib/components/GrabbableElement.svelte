@@ -20,6 +20,7 @@
 <svelte:body
 	onpointerup={(e) => {
 		e.preventDefault();
+		elementData.updatePosition(elementX, elementY);
 		translating = false;
 	}}
 	onpointermove={(e) => {
@@ -76,7 +77,6 @@
 	.grabbable-wrapper {
 		position: fixed;
 		user-select: none;
-		transition: 0.12s background;
 		box-sizing: border-box;
 		padding: 4px;
 		min-width: 50px;
@@ -125,7 +125,7 @@
 	.grabbable-wrapper:hover {
 		background: #a200ff17;
 		outline-offset: 4px;
-		outline: 2px solid #a200ff;
+		outline: 2px dashed #a200ff;
 	}
 	.grabbable-wrapper:hover .grabbable-corner, .grabbable-wrapper:hover .grabbable-top {
 		opacity: 1;

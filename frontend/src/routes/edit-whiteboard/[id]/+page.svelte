@@ -8,12 +8,30 @@
 	import { TextElement } from "$lib/elements";
 
 	let whiteboardElements = [];
+    let currentTool = "pen"
 	whiteboardElements.push(new TextElement());
+    let currentlyModifyingElement = null;
 
     let panX = $state(0);
     let panY = $state(0);
     function pointerDownHandler(e) {
         e.preventDefault();
+        if (e.target.classList.contains("whiteboard")) {
+            let newElement;
+            switch (currentTool) {
+                case "text":
+                newElement = (new TextElement());
+                newElement.updatePosition(
+                    e.clientX - panX,
+                    e.clientY - panY)
+                    break;
+                case "pen":
+                    break;
+                default:
+                    break;
+            }
+            whiteboardElements.push(newElement);
+        }
     }
     function pointerUpHandler(e) {
         e.preventDefault();
@@ -21,7 +39,21 @@
     }
     function pointerMoveHandler(e) {
         e.preventDefault();
+    }
+    function wheelHandler(e) {
+        e.preventDefault();
+        if(e.ctrlKey )return;
+        panX -= e.deltaX || 0;
+        panY -= e.deltaY || 0;
+    }
+    function addTextElementHandler(){
         
+    }
+    function addBrushStrokeHandler(){
+
+    }
+    function addEraserHandler(){
+
     }
 </script>
 
@@ -29,20 +61,27 @@
 on:pointerdown|nonpassive={pointerDownHandler}
 on:pointerup|nonpassive={pointerUpHandler}
 on:pointermove|nonpassive={pointerMoveHandler}
-on:wheel|nonpassive={e=>{
-    e.preventDefault(); // prevent scrolling the page
-    if(e.ctrlKey )return;
-    panX -= e.deltaX || 0;
-    panY -= e.deltaY || 0;
-}}></svelte:body>
+on:wheel|nonpassive={wheelHandler}></svelte:body>
+
 <div class="whiteboard" style:background-position={panX + "px " + panY + "px"}>
 
 {#each whiteboardElements as element, index}
 	<div>
-		<TextElementComponent {panX} {panY} bind:elementX={whiteboardElements[index].properties.x} bind:elementY={whiteboardElements[index].properties.y} bind:elementData={whiteboardElements[index]} />
+        {#if element.type === "text"}
+            <TextElementComponent {panX} {panY} bind:elementX={whiteboardElements[index].properties.x} bind:elementY={whiteboardElements[index].properties.y} bind:elementData={whiteboardElements[index]} />
+        {/if}
 	</div>
 {/each}
+
+
 </div>
+
+<div class="toolbar">
+    <button on:click={addTextElementHandler}> aria-label="Add Text" 💬</button> 
+    <button on:click={addBrushStrokeHandler}> aria-label="Brush Stroke" 🖌️</button>
+    <button on:click={addEraserHandler}> aria-label="Eraser" ⌫</button>
+</div>
+
 <style>
     .whiteboard {
         width: 100%;
@@ -51,4 +90,10 @@ on:wheel|nonpassive={e=>{
   background-repeat: repeat;
 
 }
+
+    .toolbar{
+        width: 100%;
+        height: 10%;
+    }
 </style>
+
