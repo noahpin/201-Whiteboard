@@ -47,13 +47,13 @@
         panY -= e.deltaY || 0;
     }
     function addTextElementHandler(){
-        
+        currentTool = "text";
     }
     function addBrushStrokeHandler(){
-
+        currentTool = "pen";
     }
     function addEraserHandler(){
-
+        currentTool = "erase"; 
     }
 </script>
 
@@ -95,7 +95,7 @@ on:wheel|nonpassive={wheelHandler}></svelte:body>
         position: fixed;
         width: 100%;
         height: 50px;
-        background-color:rgb(169, 208, 255);
+        background-color:rgb(254, 207, 239);
         border-bottom: 1px solid #ccc;
         display: flex;
         align-items: center;
