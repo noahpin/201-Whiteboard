@@ -80,15 +80,22 @@ export class PenElement extends Element {
      */
     constructor(content, properties) {
         super('pen', content, properties);
-        this.path = content.path;
+        this.path = content?.path ?? [];
+        this.pathUpdateListeners = [];
+        this.onPathUpdated = ()=>{};
     }
     /**
      * add a point to the path of the pen element
-     * @param {number} x - the global x coordinate of the point
-     * @param {number} y - the global y coordinate of the point
+     * @param {number} x - the LOCAL x coordinate of the point
+     * @param {number} y - the LOCAL y coordinate of the point
      */
     addPointToPath(x, y) {
+        this.path.push([x, y]);
         this.renderPath();
+        /**
+         * notify all listeners that the path has been updated
+         */
+        this.onPathUpdated();
     }
     renderPath() {
 

@@ -49,6 +49,11 @@
             <button class="create-btn">CREATE WHITEBOARD</button>
         </div>
         <div class="username">Username</div>
+        <div class="left-group">
+            <h1>Whiteboards</h1>
+            <button class="create-btn">CREATE WHITEBOARD</button>
+        </div>
+        <div class="username">Username</div>
     </div>
 
     <div class="whiteboard-list">
@@ -86,6 +91,17 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 1.5rem;
+    }
+
+    .left-group {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .username {
+        font-size: 1rem;
+        color: #666;
     }
 
     .left-group {
@@ -158,9 +174,14 @@
         color: #888;
         font-size: 0.95rem;
         font-weight: 400;
+    .author {
+        color: #888;
+        font-size: 0.95rem;
+        font-weight: 400;
     }
 
     .updated {
+        font-size: 0.9rem;
         font-size: 0.9rem;
         color: #666;
     }
