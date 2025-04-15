@@ -57,12 +57,7 @@
         xOffset = minX;
         yOffset = minY;
     }
-
 </script>
-<!-- 
-{#each derivedPath as point, index}
-<div class="dummy" style:top={point[1] + panY-2 + "px"} style:left = {point[0]-2 + panX + "px"}></div>
-{/each} -->
 <svg style:touch-action="none" width={width + (svgPadding * 2)} height={height + (svgPadding * 2)} viewBox={`0 0 ${width + (svgPadding * 2)} ${height + (svgPadding * 2)}`} xmlns="http://www.w3.org/2000/svg" style:top={panY + elementY - svgPadding + yOffset + "px"} style:left={panX + elementX - svgPadding + xOffset + "px"}>
     <path d={pathData} fill="black" />
 </svg>
@@ -71,6 +66,5 @@
     svg {
         position: absolute;
         pointer-events: none;
-        background: #ff00ff33
     }
 </style>

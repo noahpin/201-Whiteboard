@@ -50,7 +50,7 @@
 		translating = true;
 	}}>
 		<img
-			src="data:image/svg+xml;utf8,<svg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg' fill='%23666'><circle cx='1' cy='1' r='1'/><circle cx='6' cy='1' r='1'/><circle cx='11' cy='1' r='1'/><circle cx='1' cy='7' r='1'/><circle cx='6' cy='7' r='1'/><circle cx='11' cy='7' r='1'/></svg>"
+			src="data:image/svg+xml;utf8,<svg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg' fill='%23f5a4dc'><circle cx='1' cy='1' r='1'/><circle cx='6' cy='1' r='1'/><circle cx='11' cy='1' r='1'/><circle cx='1' cy='7' r='1'/><circle cx='6' cy='7' r='1'/><circle cx='11' cy='7' r='1'/></svg>"
 			alt="grab icon"
 		/>
 	</div>
@@ -91,7 +91,7 @@
 		border-radius: 100%;
 		cursor: nwse-resize;
 		background: #fff;
-		border: 2px solid #a200ff;
+		border: 2px solid #f5a4dc;
 		opacity: 0;
 	}
 	.grabbable-top {
@@ -102,7 +102,7 @@
         border-radius: 50px;
 		cursor: grab;
 		background: #fff;
-		border: 2px solid #a200ff;
+		border: 2px solid #f5a4dc;
 		opacity: 0;
 		left: 50%;
 		transform: translateX(-50%);
@@ -123,9 +123,9 @@
 	}
 
 	.grabbable-wrapper:hover {
-		background: #a200ff17;
+		background: #f5a4db45;
 		outline-offset: 4px;
-		outline: 2px dashed #a200ff;
+		outline: 2px dashed #f5a4dc;
 	}
 	.grabbable-wrapper:hover .grabbable-corner, .grabbable-wrapper:hover .grabbable-top {
 		opacity: 1;

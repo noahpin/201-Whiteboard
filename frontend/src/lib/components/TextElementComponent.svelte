@@ -11,5 +11,5 @@
 
 <GrabbableElement {panX} {panY} bind:elementData>
     
-	<div contenteditable="true">asdiuhfoaushdfiasuhdfiasuhdfiaushdf text</div>
+	<div  contenteditable="true">asdiuhfoaushdfiasuhdfiasuhdfiaushdf text</div>
 </GrabbableElement>
