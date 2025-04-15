@@ -77,23 +77,37 @@ on:wheel|nonpassive={wheelHandler}></svelte:body>
 </div>
 
 <div class="toolbar">
-    <button on:click={addTextElementHandler}> aria-label="Add Text" 💬</button> 
-    <button on:click={addBrushStrokeHandler}> aria-label="Brush Stroke" 🖌️</button>
-    <button on:click={addEraserHandler}> aria-label="Eraser" ⌫</button>
+    <button on:click={addTextElementHandler}> Add TextBox 💬</button> 
+    <button on:click={addBrushStrokeHandler}> Brush Stroke 🖌️</button>
+    <button on:click={addEraserHandler}> Erase ⌫</button>
 </div>
 
 <style>
     .whiteboard {
         width: 100%;
-        height: 100%;
+        height: calc(50px - 100vh);
   background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="1" cy="1" r="1" fill="%23ccc"/></svg>');
   background-repeat: repeat;
 
 }
 
-    .toolbar{
+    .toolbar {
+        position: fixed;
         width: 100%;
-        height: 10%;
+        height: 50px;
+        background-color:rgb(169, 208, 255);
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        gap: 10px;
     }
+
+    .toolbar button {
+        padding: 6px 12px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
 </style>
 
