@@ -8,7 +8,7 @@ CREATE TABLE users (
 
     userId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     password VARCHAR(30) NOT NULL,
-    email VARCHAR(320) NOT NULL -- Theoretical maximum for an email
+    username VARCHAR(30) NOT NULL -- Theoretical maximum for an username
 );
 
 CREATE TABLE whiteboards (
@@ -48,17 +48,17 @@ CREATE TABLE messages (
 -- Some test statements --
 
 -- Create user1 and user2
-INSERT INTO users (userId, password, email) VALUES (1, 'qwerty', 'example1@example.com');
-INSERT INTO users (userId, password, email) VALUES (2, 'qwerty2', 'example2@example.com');
+INSERT INTO users (userId, password, username) VALUES (1, 'qwerty', 'example1@example.com');
+INSERT INTO users (userId, password, username) VALUES (2, 'qwerty2', 'example2@example.com');
 
 -- User1 makes a whiteboard at 1:00 pm on April 6
 INSERT INTO whiteboards (whiteboardId, userId, content, updatedAt) VALUES (1, 1, '{"testdata": "dataexample"}', '2025-04-06 13:00:00');
 
 -- User1 shares with whiteboard1 with user2 as editor
-INSERT INTO permissions(permissionLevel, userId, whiteboardId) VALUES (2, 2, 1);
+INSERT INTO permissions (permissionLevel, userId, whiteboardId) VALUES (2, 2, 1);
 
 -- User 2 sends a message to user1 at 1:05 pm.
-INSERT INTO messages (userId, whiteboardId, content, timestamp)VALUES (2, 1, 'How are you?', '2025-04-06 13:05:00');
+INSERT INTO messages (userId, whiteboardId, content, timestamp) VALUES (2, 1, 'How are you?', '2025-04-06 13:05:00');
 
 -- Check our work
 SELECT * FROM users;
