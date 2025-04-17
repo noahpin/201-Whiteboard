@@ -21,7 +21,7 @@ public class CreateAccount extends HttpServlet {
 		String inputPassword = request.getParameter("password");
 		
 
-
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("application/json");
 	
 		Connection conn = null;

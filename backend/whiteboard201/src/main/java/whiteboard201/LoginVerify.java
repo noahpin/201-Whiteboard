@@ -19,12 +19,13 @@ public class LoginVerify extends HttpServlet {
 
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 		
 		String inputPassword = request.getParameter("password");
 		String inputUsername = request.getParameter("username");
 		
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("application/json");
 		
 		Connection conn = null;

@@ -9,6 +9,8 @@
  -->
 
  <script>
+	import { onMount } from "svelte";
+
     // Example Whiteboard Array with Dummy Values
     let whiteboards = [
         {
@@ -40,6 +42,22 @@
             date: null,
         },
     ];
+
+    let userId = "1" //dummy for now lol
+
+    onMount(() => {
+        // Fetch whiteboards from the server
+        console.log(`http://localhost:8081/whiteboard201/whiteboards/get?userId=${userId}`)
+        fetch(`http://localhost:8081/whiteboard201/whiteboards/get?userId=${userId}`)
+            .then((response) => response.json())
+            .then((data) => {
+            console.log(data);
+            // whiteboards = data;
+            })
+            .catch((error) => {
+            console.error("Error fetching whiteboards:", error);
+            });
+    });
 </script>
 
 <div class="whiteboards-page container">

@@ -24,12 +24,12 @@ import com.google.gson.Gson;
 public class GetUserWhiteboards extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Gson gson = new Gson();
 		
 		String userId = request.getParameter("userId");
-		
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("application/json");
 		
 		Connection conn = null;
