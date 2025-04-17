@@ -7,10 +7,10 @@
 	import TextElementComponent from "$lib/components/TextElementComponent.svelte";
 	import PenElementComponent from "$lib/components/PenElementComponent.svelte";
 	import { TextElement, PenElement } from "$lib/elements";
+	import { onMount } from "svelte";
 
 	let whiteboardElements = $state([]);
 	let currentTool = "text";
-	whiteboardElements.push(new TextElement());
 	let currentlyModifyingElement = null;
 	let clickDown = $state(false);
 	let panX = $state(0);
@@ -19,8 +19,8 @@
 	let penOriginalY = 0;
 	function pointerDownHandler(e) {
 		if (e.target.classList.contains("whiteboard")) {
-            e.preventDefault();
-            clickDown = true;
+			e.preventDefault();
+			clickDown = true;
 			switch (currentTool) {
 				case "text":
 					let textElement = new TextElement();
@@ -34,7 +34,7 @@
 					penOriginalX = e.clientX - panX;
 					penOriginalY = e.clientY - panY;
 					currentlyModifyingElement = penElement;
-                    whiteboardElements.push(penElement);
+					whiteboardElements.push(penElement);
 					break;
 				default:
 					break;
@@ -42,14 +42,13 @@
 		}
 	}
 	function pointerUpHandler(e) {
-        if(clickDown)
-		    e.preventDefault();
+		if (clickDown) e.preventDefault();
 		clickDown = false;
 		currentlyModifyingElement = null;
 	}
 	function pointerMoveHandler(e) {
 		if (clickDown) {
-            e.preventDefault();
+			e.preventDefault();
 			if (
 				currentlyModifyingElement != null &&
 				currentlyModifyingElement.type == "pen"
@@ -75,6 +74,28 @@
 	}
 	function addEraserHandler() {
 		currentTool = "erase";
+	}
+	function exportData() {
+		let data = []
+		whiteboardElements.forEach((element) => {
+			data.push(element.export());
+		});
+		return data;
+	}
+	onMount(() => {
+		window.exportData = exportData;
+	});
+
+	function importData(data) {
+		whiteboardElements = data.map((element) => {
+			if (element.type === "text") {
+				return new TextElement(element.content, element.properties);
+			} else if (element.type === "pen") {
+				console.log(element);
+				return new PenElement(element.content, element.properties);
+			}
+			return null;
+		});
 	}
 </script>
 

@@ -25,9 +25,6 @@ export class Element {
             height: properties.height || 100, // default height
             x: properties.x || 0, // default x position
             y: properties.y || 0, // default y position
-            fillColor: properties.fillColor || '#FFFFFF', // default fill color
-            borderColor: properties.borderColor || '#000000', // default border color
-            textColor: properties.textColor || '#000000' // default text color
         };
     }
 
@@ -73,7 +70,13 @@ export class TextElement extends Element {
      */
     constructor(content, properties) {
         super('text', content, properties);
-        this.text = content;
+    }
+    updateTextContent(text) {
+        /**
+         * update the text content of the element
+         * @param {string} text - the new text content
+         */
+        this.content = text;
     }
 }
 
@@ -106,5 +109,10 @@ export class PenElement extends Element {
     }
     renderPath() {
 
+    }
+
+    export() {
+        this.content = {path: this.path};
+        return super.export();
     }
 }

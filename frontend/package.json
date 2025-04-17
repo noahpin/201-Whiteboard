@@ -18,6 +18,7 @@
 	},
 	"dependencies": {
 		"@tiptap/core": "^2.11.7",
+		"@tiptap/extension-placeholder": "^2.11.7",
 		"@tiptap/pm": "^2.11.7",
 		"@tiptap/starter-kit": "^2.11.7",
 		"perfect-freehand": "^1.2.2"

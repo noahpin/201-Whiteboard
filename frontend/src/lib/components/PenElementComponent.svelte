@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from "svelte";
 	import GrabbableElement from "./GrabbableElement.svelte";
     import { getStroke } from 'perfect-freehand'
 	let {
@@ -57,6 +58,9 @@
         xOffset = minX;
         yOffset = minY;
     }
+    onMount(() => {
+        onPathUpdated();
+    });
 </script>
 <svg style:touch-action="none" width={width + (svgPadding * 2)} height={height + (svgPadding * 2)} viewBox={`0 0 ${width + (svgPadding * 2)} ${height + (svgPadding * 2)}`} xmlns="http://www.w3.org/2000/svg" style:top={panY + elementY - svgPadding + yOffset + "px"} style:left={panX + elementX - svgPadding + xOffset + "px"}>
     <path d={pathData} fill="black" />

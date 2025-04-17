@@ -14,9 +14,11 @@
 		editor = new Editor({
 			element: textEditor,
 			extensions: [StarterKit],
-			content: '<p>Hello World! 🌍️ </p>',
+			content: elementData.content,
 			onTransaction: () => {
 				editor = editor;
+				console.log(editor.getHTML());
+				elementData.updateTextContent(editor.getHTML());
 			},
 		});
 	});
