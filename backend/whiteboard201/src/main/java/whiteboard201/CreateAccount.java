@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/account/create")
 public class CreateAccount extends HttpServlet {
@@ -27,8 +27,6 @@ public class CreateAccount extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		try {
-			System.out.println(inputUsername);
-			System.out.println(inputPassword);
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/whiteboard201?user=root&password=root");
 			st = conn.prepareStatement("INSERT INTO whiteboard201.users (username, password)"
 					+ " VALUES (?, ?)");
