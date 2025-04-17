@@ -1,34 +1,50 @@
 <script>
-  let username = '';
-  let password = '';
-  let action = 'register'; // Default to register
-
-  function validateForm(event) {
-    // For guests, we bypass username/password requirements
-    if (action === 'guest') {
-      // Allow guest access without username/password
-      return true;
-    }
-    
-    if (username == '') {
-      alert('Please enter a username');
+    let username = '';
+    let password = '';
+    let action = 'register';
+  
+    async function handleSubmit(event) {
       event.preventDefault();
-      return false;
+  
+      if (action !== 'guest') {
+        if (!username.trim()) {
+          alert("Please enter a username");
+          return;
+        }
+        if (!password.trim()) {
+          alert("Please enter a password");
+          return;
+        }
+      }
+  
+      try {
+        const response = await fetch("http://localhost:8080/whiteboard201/login/verify", { // Java dev server
+          method: "POST",
+          body: new URLSearchParams({
+            username,
+            password,
+            action
+          })
+        });
+  
+        const data = await response.json();
+        console.log("Server response: ", data);
+  
+        if (data.userId && data.userId !== -1) {
+          alert(`Login successful. User id: ${data.userId}`);
+          // NAVIGATE TO HOME PAGE HERE
+        } else {
+          alert("Login failed. Please check your credentials.");
+        }
+      } catch (err) {
+        console.log(err)
+        alert("Something went wrong: " + err.message);
+      }
     }
-    
-    if (password == '') {
-      alert('Please enter a password');
-      event.preventDefault();
-      return false;
-    }
-    
-    return true;
-  }
-</script>
+  </script>
 <head>
 <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #FECFEF;
       display: flex;
       align-items: center;
@@ -126,7 +142,7 @@
     }
   </style>
 </head>
-<form name="loginForm" action="ValidationServlet" method="POST" on:submit={validateForm}>
+<form on:submit={handleSubmit}>
     <h1>Whiteboard</h1>
     
     <label for="username">Username</label>

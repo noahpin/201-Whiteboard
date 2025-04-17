@@ -19,8 +19,8 @@
 
     onMount(() => {
         // Fetch whiteboards from the server
-        console.log(`http://localhost:8081/whiteboard201/whiteboards/get?userId=${userId}`)
-        fetch(`http://localhost:8081/whiteboard201/whiteboards/get?userId=${userId}`)
+        console.log(`http://localhost:8080/whiteboard201/whiteboards/get?userId=${userId}`)
+        fetch(`http://localhost:8080/whiteboard201/whiteboards/get?userId=${userId}`)
             .then((response) => response.json())
             .then((data) => {
                 whiteboards = data.map((board) => {
