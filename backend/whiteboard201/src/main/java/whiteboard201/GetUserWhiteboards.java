@@ -46,7 +46,7 @@ public class GetUserWhiteboards extends HttpServlet {
 		try {
 			// Name, most recent update, owner, whiteboardId.
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/whiteboard201?user=root&password=root");
-			st = conn.prepareStatement("SELECT whiteboardId, username, updatedAt FROM whiteboard201.whiteboards\r\n"
+			st = conn.prepareStatement("SELECT whiteboardId, name, username, updatedAt FROM whiteboard201.whiteboards\r\n"
 					+ "LEFT JOIN users ON users.userId = whiteboards.userId\r\n"
 					+ "WHERE users.userId = ?");
 			st.setInt(1, Integer.parseInt(userId));
@@ -55,7 +55,7 @@ public class GetUserWhiteboards extends HttpServlet {
 			ArrayList<Whiteboard> boards = new ArrayList<>();
 			
 			while (rs.next()) {
-				Whiteboard wb = new Whiteboard(rs.getInt("whiteboardId"), rs.getString("username"), rs.getTimestamp("updatedAt"));
+				Whiteboard wb = new Whiteboard(rs.getInt("whiteboardId"), rs.getString("username"), rs.getString("name"), rs.getTimestamp("updatedAt"));
 				boards.add(wb);
 			}
 			String res = gson.toJson(boards);

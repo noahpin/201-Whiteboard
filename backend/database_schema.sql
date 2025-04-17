@@ -15,6 +15,7 @@ CREATE TABLE whiteboards (
 
     whiteboardId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
     userId INTEGER NOT NULL,
+    name VARCHAR(30) NOT NULL,
     content JSON NOT NULL,
     updatedAt DATETIME,
 
@@ -52,7 +53,7 @@ INSERT INTO users (userId, password, username) VALUES (1, 'qwerty', 'example1@ex
 INSERT INTO users (userId, password, username) VALUES (2, 'qwerty2', 'example2@example.com');
 
 -- User1 makes a whiteboard at 1:00 pm on April 6
-INSERT INTO whiteboards (whiteboardId, userId, content, updatedAt) VALUES (1, 1, '{"testdata": "dataexample"}', '2025-04-06 13:00:00');
+INSERT INTO whiteboards (whiteboardId, userId, name, content, updatedAt) VALUES (1, 1, 'Board one', '{"testdata": "dataexample"}', '2025-04-06 13:00:00');
 
 -- User1 shares with whiteboard1 with user2 as editor
 INSERT INTO permissions (permissionLevel, userId, whiteboardId) VALUES (2, 2, 1);
