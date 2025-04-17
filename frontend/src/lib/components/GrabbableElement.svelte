@@ -7,19 +7,20 @@
 	let {
 		panX = 0,
 		panY = 0,
-		elementX = $bindable(0),
-		elementY = $bindable(0),
 		children,
 		elementData = $bindable(null),
 	} = $props();
 	let pX = 0;
 	let pY = 0;
+	let elementX = $state(elementData.properties.x);
+	let elementY = $state(elementData.properties.y);
 	let translating = false;
 </script>
 
 <svelte:body
 	onpointerup={(e) => {
 		e.preventDefault();
+		if(!translating) return;
 		elementData.updatePosition(elementX, elementY);
 		translating = false;
 	}}

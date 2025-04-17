@@ -4,8 +4,6 @@
 	let {
 		panX = 0,
 		panY = 0,
-		elementX = $bindable(0),
-		elementY = $bindable(0),
 		elementData = $bindable(null),
 	} = $props();
     let derivedPath = $derived(elementData.path);

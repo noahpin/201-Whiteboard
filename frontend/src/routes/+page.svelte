@@ -174,11 +174,7 @@
         color: #888;
         font-size: 0.95rem;
         font-weight: 400;
-    .author {
-        color: #888;
-        font-size: 0.95rem;
-        font-weight: 400;
-    }
+        }
 
     .updated {
         font-size: 0.9rem;
