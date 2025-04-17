@@ -126,7 +126,7 @@
     }
   </style>
 </head>
-<form name="loginForm" action="ValidationServlet" method="GET" on:submit={validateForm}>
+<form name="loginForm" action="ValidationServlet" method="POST" on:submit={validateForm}>
     <h1>Whiteboard</h1>
     
     <label for="username">Username</label>

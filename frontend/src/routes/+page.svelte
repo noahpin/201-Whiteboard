@@ -9,37 +9,34 @@
  -->
 
  <script>
+	import { onMount } from "svelte";
+
     // Example Whiteboard Array with Dummy Values
     let whiteboards = [
-        {
-            id: "csci-201",
-            title: "CSCI 201 Planning Board",
-            author: "Noah Pinales",
-            updated: "12:53 pm",
-            date: null,
-        },
-        {
-            id: "ee-250",
-            title: "EE 250 Notes",
-            author: "Noah Pinales",
-            updated: "12:53 pm",
-            date: null,
-        },
-        {
-            id: "board-3",
-            title: "Board board board",
-            author: "Noah Pinales",
-            updated: "8:00 pm",
-            date: null,
-        },
-        {
-            id: "board-2",
-            title: "Board Board",
-            author: "Noah Pinales",
-            updated: "12:53 pm",
-            date: null,
-        },
     ];
+
+    let userId = "1" //dummy for now lol
+
+    onMount(() => {
+        // Fetch whiteboards from the server
+        console.log(`http://localhost:8081/whiteboard201/whiteboards/get?userId=${userId}`)
+        fetch(`http://localhost:8081/whiteboard201/whiteboards/get?userId=${userId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                whiteboards = data.map((board) => {
+                    return {
+                        id: board.id,
+                        title: board.boardName,
+                        author: board.username,
+                        updated: board.updatedAt.replace("?", " "),
+
+                }})
+            // whiteboards = data;
+            })
+            .catch((error) => {
+            console.error("Error fetching whiteboards:", error);
+            });
+    });
 </script>
 
 <div class="whiteboards-page container">
