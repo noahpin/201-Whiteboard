@@ -18,9 +18,9 @@
 	let penOriginalX = 0;
 	let penOriginalY = 0;
 	function pointerDownHandler(e) {
-		e.preventDefault();
-		clickDown = true;
 		if (e.target.classList.contains("whiteboard")) {
+            e.preventDefault();
+            clickDown = true;
 			switch (currentTool) {
 				case "text":
 					let textElement = new TextElement();
@@ -42,13 +42,14 @@
 		}
 	}
 	function pointerUpHandler(e) {
-		e.preventDefault();
+        if(clickDown)
+		    e.preventDefault();
 		clickDown = false;
 		currentlyModifyingElement = null;
 	}
 	function pointerMoveHandler(e) {
-		e.preventDefault();
 		if (clickDown) {
+            e.preventDefault();
 			if (
 				currentlyModifyingElement != null &&
 				currentlyModifyingElement.type == "pen"

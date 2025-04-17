@@ -40,8 +40,15 @@ export class Element {
         this.properties.x = x;
         this.properties.y = y;
     }
-
-
+    updateSize(width, height) {
+        /**
+         * update the size of the element
+         * @param {number} width - the new width
+         * @param {number} height - the new height
+         */
+        this.properties.width = width;
+        this.properties.height = height;
+    }
 
     export() {
         /**

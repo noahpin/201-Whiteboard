@@ -6,6 +6,8 @@
 		panY = 0,
 		elementData = $bindable(null),
 	} = $props();
+	let elementX = $state(elementData.properties.x);
+	let elementY = $state(elementData.properties.y);
     let derivedPath = $derived(elementData.path);
     elementData.onPathUpdated = onPathUpdated;
     let pathData = $state('')

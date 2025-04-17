@@ -6,3 +6,27 @@ body, html {
     overflow: hidden;
     overscroll-behavior: none;
 }
+
+.editor {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border: 2px solid #f5a4dc;
+    box-shadow: 2px 2px 0px #f5a4dc, 4px 4px 5px #00000019;
+    box-sizing: border-box;
+    border-radius: 4px;
+    transform: translate(-1px, -1px);
+}
+.tiptap {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+.tiptap:focus {
+    outline: none;
+}
+.tiptap *:first-child {
+    margin-top: 0 ;
+}
