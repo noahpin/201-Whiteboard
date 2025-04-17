@@ -19,12 +19,20 @@ public class CreateAccount extends HttpServlet {
 		
 		String inputUsername = request.getParameter("username");
 		String inputPassword = request.getParameter("password");
+		
+
 
 		response.setContentType("application/json");
 	
 		Connection conn = null;
 		PreparedStatement st = null;
 		PrintWriter out = response.getWriter();
+		
+		if (inputUsername == null || inputPassword == null) {
+			out.println("{\"message\": \"Please provide all fields.\"}");
+			out.close();
+			return;
+		}
 		
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/whiteboard201?user=root&password=root");
