@@ -5,8 +5,6 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.*;
 
 import java.sql.*;
@@ -21,6 +19,7 @@ public class LoginRegister extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
+		setCorsHeaders(response);
 		
 		String inputPassword = request.getParameter("password");
 		String inputUsername = request.getParameter("username");
@@ -47,7 +46,7 @@ public class LoginRegister extends HttpServlet {
 		}
 		
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/whiteboard201?user=root&password=root");
+			conn = DriverManager.getConnection(DBCreds.DB_URL, DBCreds.DB_USER, DBCreds.DB_PASS);
 			if (option.equals("login")) {
 				st = conn.prepareStatement("SELECT * FROM whiteboard201.users WHERE username = ? AND password = ? LIMIT 1");
 				st.setString(1, inputUsername);
@@ -105,4 +104,10 @@ public class LoginRegister extends HttpServlet {
 			out.close();
 		}
 	}
+    private void setCorsHeaders(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5174"); // Svelte dev server
+        response.setHeader("Access-Control-Allow-Methods", "POST");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+    }
 }

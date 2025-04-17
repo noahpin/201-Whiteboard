@@ -1,3 +1,4 @@
+/*
 package whiteboard201;
 
 import java.io.IOException;
@@ -12,11 +13,6 @@ import javax.servlet.http.*;
 public class LoginVerify extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    // Replace with your actual database credentials
-    private static final String DB_URL = "jdbc:mysql://localhost/whiteboard201";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "password";
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +24,7 @@ public class LoginVerify extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+        try (Connection conn = DriverManager.getConnection(DBCreds.DB_URL, DBCreds.DB_USER, DBCreds.DB_PASS);
              PreparedStatement st = conn.prepareStatement("SELECT * FROM whiteboard201.users WHERE username = ? AND password = ? LIMIT 1")) {
 
             st.setString(1, username);
@@ -62,3 +58,4 @@ public class LoginVerify extends HttpServlet {
         response.setHeader("Access-Control-Allow-Credentials", "true");
     }
 }
+*/

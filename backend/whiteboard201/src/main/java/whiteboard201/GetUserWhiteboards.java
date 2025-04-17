@@ -45,7 +45,7 @@ public class GetUserWhiteboards extends HttpServlet {
 		
 		try {
 			// Name, most recent update, owner, whiteboardId.
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/whiteboard201?user=root&password=root");
+			conn = DriverManager.getConnection(DBCreds.DB_URL, DBCreds.DB_USER, DBCreds.DB_PASS);
 			st = conn.prepareStatement("SELECT whiteboardId, name, username, updatedAt FROM whiteboard201.whiteboards\r\n"
 					+ "LEFT JOIN users ON users.userId = whiteboards.userId\r\n"
 					+ "WHERE users.userId = ?");
