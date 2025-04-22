@@ -11,7 +11,7 @@
  <script>
 	import { onMount } from "svelte";
     import {PUBLIC_LOCALHOST_URL} from "$env/static/public"
-    import { getCookie } from "svelte-cookie";
+    import { deleteCookie, getCookie } from "svelte-cookie";
 	import { goto } from "$app/navigation";
 
     // Example Whiteboard Array with Dummy Values
@@ -57,6 +57,7 @@
             <button class="create-btn">CREATE WHITEBOARD</button>
         </div>
         <div class="username">Username</div>
+        <button on:click={()=>{deleteCookie("userId"); goto("/login")}}>Log Out</button>
     </div>
 
     <div class="whiteboard-list">
