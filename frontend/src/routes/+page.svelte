@@ -11,6 +11,8 @@
  <script>
 	import { onMount } from "svelte";
     import {PUBLIC_LOCALHOST_URL} from "$env/static/public"
+    import { getCookie } from "svelte-cookie";
+	import { goto } from "$app/navigation";
 
     // Example Whiteboard Array with Dummy Values
     let whiteboards = [
@@ -19,6 +21,12 @@
     let userId = "1" //dummy for now lol
 
     onMount(() => {
+        userId = getCookie("userId");
+        if(userId === undefined || userId === null || userId === "-1" || userId === "") {
+            console.log("User ID not found in cookies");
+            goto("/login");
+            return;
+        }
         // Fetch whiteboards from the server
         console.log(PUBLIC_LOCALHOST_URL)
         console.log(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboards/get?userId=${userId}`)
@@ -27,12 +35,13 @@
             .then((data) => {
                 whiteboards = data.map((board) => {
                     return {
-                        id: board.id,
+                        id: board.whiteboardId,
                         title: board.boardName,
                         author: board.username,
                         updated: board.updatedAt.replace("?", " "),
 
                 }})
+                console.log(whiteboards, data)
             // whiteboards = data;
             })
             .catch((error) => {
@@ -57,7 +66,7 @@
 
     <div class="whiteboard-list">
         {#each whiteboards as board}
-            <a class="whiteboard-entry" href={`/whiteboard/${board.id}`}>
+            <a class="whiteboard-entry" href={`/edit-whiteboard/${board.id}`}>
                 <div class="info">
                     <div class="title">{board.title}</div>
                     <div class="author">By: {board.author}</div>
