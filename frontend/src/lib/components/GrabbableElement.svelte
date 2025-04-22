@@ -9,6 +9,9 @@
 		panY = 0,
 		children,
 		elementData = $bindable(null),
+		requestSave = void 0,
+		startEdit = void 0,
+		endEdit = void 0,
 	} = $props();
 	let pX = 0;
 	let pY = 0;
@@ -35,6 +38,8 @@
 		resizing = false;
 		translatingX = false;
 		translatingY = false;
+		endEdit();
+		requestSave();
 	}}
 	onpointermove={(e) => {
 		if (translating) {
@@ -84,6 +89,7 @@
 			pX = e.clientX;
 			pY = e.clientY;
 			translating = true;
+			startEdit();
 		}}
 	>
 		<img
@@ -102,6 +108,7 @@
 			resizingYInvert = -1;
 			translatingX = true;
 			translatingY = true;
+			startEdit();
 		}}
 		style:top={"-12px"}
 		style:left={"-12px"}
@@ -118,6 +125,7 @@
 			resizingYInvert = 1;
 			translatingX = true;
 			resizing = true;
+			startEdit();
 		}}
 	></div>
 	<div
@@ -132,6 +140,7 @@
 			resizingXInvert = 1;
 			translatingY = true;
 			resizing = true;
+			startEdit();
 		}}
 	></div>
 	<div
@@ -145,6 +154,7 @@
 			resizingXInvert = 1;
 			resizingYInvert = 1;
 			resizing = true;
+			startEdit();
 		}}
 	></div>
 	{@render children()}

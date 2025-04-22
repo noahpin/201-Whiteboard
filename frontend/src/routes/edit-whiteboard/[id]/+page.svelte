@@ -8,11 +8,12 @@
 	import PenElementComponent from "$lib/components/PenElementComponent.svelte";
 	import { TextElement, PenElement } from "$lib/elements";
 	import { onMount } from "svelte";
-	import {PUBLIC_LOCALHOST_URL} from "$env/static/public";
+	import { PUBLIC_LOCALHOST_URL } from "$env/static/public";
 	import { getCookie } from "svelte-cookie";
+	// import { load } from "../+page.server.js";
 
-	let {data} = $props();
-	console.log(data)
+	let { data } = $props();
+	console.log(data);
 
 	let whiteboardElements = $state([]);
 	let currentTool = "text";
@@ -31,6 +32,7 @@
 					let textElement = new TextElement();
 					textElement.updatePosition(e.clientX - panX, e.clientY - panY);
 					whiteboardElements.push(textElement);
+					requestSave();
 					break;
 				case "pen":
 					let penElement = new PenElement();
@@ -40,6 +42,7 @@
 					penOriginalY = e.clientY - panY;
 					currentlyModifyingElement = penElement;
 					whiteboardElements.push(penElement);
+					startEdit();
 					break;
 				default:
 					break;
@@ -49,6 +52,13 @@
 	function pointerUpHandler(e) {
 		if (clickDown) e.preventDefault();
 		clickDown = false;
+		if (
+			currentlyModifyingElement != null &&
+			currentlyModifyingElement.type == "pen"
+		) {
+			endEdit();
+			requestSave();
+		}
 		currentlyModifyingElement = null;
 	}
 	function pointerMoveHandler(e) {
@@ -81,7 +91,7 @@
 		currentTool = "erase";
 	}
 	function exportData() {
-		let data = []
+		let data = [];
 		whiteboardElements.forEach((element) => {
 			data.push(element.export());
 		});
@@ -92,26 +102,40 @@
 		window.saveData = saveData;
 		//load data
 		let userId = getCookie("userId");
-		fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboard/get?whiteboardId=${data.id}`)
+		loadData();
+		setInterval(() => {
+			if (currentlyEditingSomething || needToSave) return;
+			console.log("loading");
+			loadData();
+		}, 200);
+	});
+
+	function loadData() {
+		fetch(
+			`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboard/get?whiteboardId=${data.id}`
+		)
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
+				// console.log(data);
 				importData(data.content);
 			})
 			.catch((error) => {
 				console.error("Error fetching whiteboards:", error);
 			});
-	});
+	}
 
 	function saveData() {
 		let userId = getCookie("userId");
-		fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/saveWhiteboard?id=${data.id}`, {
-			method: "POST",
-			body: JSON.stringify(exportData()),
-			headers: {
-				"Content-Type": "text/plain",
-			},
-		})
+		fetch(
+			`${PUBLIC_LOCALHOST_URL}/whiteboard201/saveWhiteboard?id=${data.id}`,
+			{
+				method: "POST",
+				body: JSON.stringify(exportData()),
+				headers: {
+					"Content-Type": "text/plain",
+				},
+			}
+		)
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
@@ -120,17 +144,39 @@
 				console.error("Error saving whiteboard:", error);
 			});
 	}
+	let timestamp = $state(0);
 
 	function importData(data) {
+		whiteboardElements = [];
+		timestamp = Date.now();
+
 		whiteboardElements = data.map((element) => {
 			if (element.type === "text") {
 				return new TextElement(element.content, element.properties);
 			} else if (element.type === "pen") {
-				console.log(element);
+				// console.log(element);
 				return new PenElement(element.content, element.properties);
 			}
 			return null;
 		});
+	}
+
+	let needToSave = false;
+	function requestSave() {
+		if (needToSave) return;
+		needToSave = true;
+		setTimeout(() => {
+			saveData();
+			needToSave = false;
+		}, 200);
+	}
+	let currentlyEditingSomething = false;
+	function startEdit() {
+		if (currentlyEditingSomething) return;
+		currentlyEditingSomething = true;
+	}
+	function endEdit() {
+		currentlyEditingSomething = false;
 	}
 </script>
 
@@ -142,29 +188,36 @@
 />
 
 <div class="whiteboard" style:background-position={panX + "px " + panY + "px"}>
-	{#each whiteboardElements as element, index}
-		<div>
-			{#if element.type === "text"}
-				<TextElementComponent
-					{panX}
-					{panY}
-					bind:elementData={whiteboardElements[index]}
-				/>
-			{:else if element.type == "pen"}
-				<PenElementComponent
-					{panX}
-					{panY}
-					bind:elementData={whiteboardElements[index]}
-				/>
-			{/if}
-		</div>
-	{/each}
+	{#key timestamp}
+		{#each whiteboardElements as element, index}
+			<div>
+				{#if element.type === "text"}
+					<TextElementComponent
+						{requestSave}
+						{startEdit}
+						{endEdit}
+						{panX}
+						{panY}
+						bind:elementData={whiteboardElements[index]}
+					/>
+				{:else if element.type == "pen"}
+					<PenElementComponent
+						{panX}
+						{startEdit}
+						{endEdit}
+						{panY}
+						bind:elementData={whiteboardElements[index]}
+					/>
+				{/if}
+			</div>
+		{/each}{/key}
 </div>
 
 <div class="toolbar">
 	<button onclick={addTextElementHandler}> Add TextBox 💬</button>
 	<button onclick={addBrushStrokeHandler}> Brush Stroke 🖌️</button>
 	<button onclick={addEraserHandler}> Erase ⌫</button>
+	<a href="/" class="home-btn"> Home 🏠</a>
 </div>
 
 <style>
@@ -192,4 +245,27 @@
 		font-size: 14px;
 		cursor: pointer;
 	}
+
+	.toolbar button,
+	.toolbar .home-btn {
+		padding: 6px 12px;
+		font-size: 14px;
+		cursor: pointer;
+		background-color: #cfcfcf;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		font-weight : bold;
+		text-decoration: none; /* important for <a> */
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.toolbar button:hover,
+	.toolbar .home-btn:hover {
+		background-color: #f5a4dc;
+	}
+
+
 </style>

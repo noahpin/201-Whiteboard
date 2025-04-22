@@ -7,9 +7,15 @@
 		panX = 0,
 		panY = 0,
 		elementData = $bindable(null),
+		requestSave = void 0,
+		startEdit = void 0,
+		endEdit = void 0,
 	} = $props();
 	let editor;
+	let editing = false;
 	let textEditor;
+	let timeout;
+	let firstTransaction = true;
 	onMount(() => {
 		editor = new Editor({
 			element: textEditor,
@@ -17,8 +23,26 @@
 			content: elementData.content,
 			onTransaction: () => {
 				editor = editor;
-				console.log(editor.getHTML());
+				if(firstTransaction) {
+					firstTransaction = false;
+					return;
+				}
 				elementData.updateTextContent(editor.getHTML());
+				if (timeout) {
+					clearTimeout(timeout);
+				}
+				timeout = setTimeout(() => {
+					endEdit();
+					requestSave();
+					editing = false;
+				}, 1000);
+				if (!editing) {
+					editing = true;
+					startEdit();
+				}
+				if (firstTransaction) {
+					firstTransaction = false;
+				}
 			},
 		});
 	});
@@ -30,6 +54,8 @@
 	});
 </script>
 
-<GrabbableElement {panX} {panY} bind:elementData>
+<GrabbableElement {panX} {panY}
+{startEdit}
+{endEdit} bind:elementData {requestSave}>
 	<div class="editor" bind:this={textEditor}></div>
 </GrabbableElement>
