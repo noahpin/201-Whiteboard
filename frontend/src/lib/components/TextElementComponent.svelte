@@ -10,6 +10,8 @@
 		requestSave = void 0,
 		startEdit = void 0,
 		endEdit = void 0,
+		currentTool,
+		requestEraseElement = void 0,
 	} = $props();
 	let editor;
 	let editing = false;
@@ -46,6 +48,7 @@
 			},
 		});
 	});
+    let erase = $state(false);
 
 	onDestroy(() => {
 		if (editor) {
@@ -54,8 +57,22 @@
 	});
 </script>
 
-<GrabbableElement {panX} {panY}
+<svelte:body onpointerup={()=>{
+    if(erase) {
+        erase = false;
+        requestEraseElement(elementData);
+    }
+}}/>
+
+<GrabbableElement {currentTool} {panX} {panY}
 {startEdit}
 {endEdit} bind:elementData {requestSave}>
-	<div class="editor" bind:this={textEditor}></div>
+	<div class="editor" bind:this={textEditor}
+	class:erase={erase}
+    onmouseover={(e) => {
+        if(currentTool === "erase" && e.buttons === 1) {
+            erase = true;
+        }
+    }}
+	></div>
 </GrabbableElement>

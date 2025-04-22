@@ -9,6 +9,7 @@
 		panY = 0,
 		children,
 		elementData = $bindable(null),
+		currentTool,
 		requestSave = void 0,
 		startEdit = void 0,
 		endEdit = void 0,

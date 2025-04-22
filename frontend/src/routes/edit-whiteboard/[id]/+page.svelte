@@ -16,7 +16,7 @@
 	console.log(data);
 
 	let whiteboardElements = $state([]);
-	let currentTool = "text";
+	let currentTool = $state("text");
 	let currentlyModifyingElement = null;
 	let clickDown = $state(false);
 	let panX = $state(0);
@@ -44,6 +44,8 @@
 					whiteboardElements.push(penElement);
 					startEdit();
 					break;
+				case "erase":
+					startEdit();
 				default:
 					break;
 			}
@@ -178,6 +180,22 @@
 	function endEdit() {
 		currentlyEditingSomething = false;
 	}
+	let eraseDebounce = 0;
+	let elementsToErase = [];
+	function requestEraseElement(element) {
+		if (elementsToErase.includes(element)) return;
+		elementsToErase.push(element);
+		clearTimeout(eraseDebounce);
+		eraseDebounce = setTimeout(() => {
+			whiteboardElements = whiteboardElements.filter(
+				(e) => !elementsToErase.includes(e)
+			);
+			elementsToErase = [];
+			timestamp = Date.now();
+			endEdit();
+			requestSave();
+		}, 1);
+	}
 </script>
 
 <svelte:body
@@ -193,15 +211,19 @@
 			<div>
 				{#if element.type === "text"}
 					<TextElementComponent
+					{currentTool}
 						{requestSave}
 						{startEdit}
 						{endEdit}
 						{panX}
 						{panY}
+						{requestEraseElement}
 						bind:elementData={whiteboardElements[index]}
 					/>
 				{:else if element.type == "pen"}
 					<PenElementComponent
+					{currentTool}
+					requestEraseElement={requestEraseElement}
 						{panX}
 						{startEdit}
 						{endEdit}

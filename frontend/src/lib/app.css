@@ -30,3 +30,7 @@ body, html {
 .tiptap *:first-child {
     margin-top: 0 ;
 }
+.erase {
+    opacity: 0.25;
+    filter: saturate(0);
+}
