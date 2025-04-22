@@ -35,7 +35,7 @@
         console.log("Server response: ", data);
   
         if (data.userId && data.userId !== -1) {
-          alert(`Login successful. User id: ${data.userId}`);
+          // should not send the alert of successful login
           setCookie("userId", data.userId);
           goto("/");
         } else if (data.message) {
