@@ -80,68 +80,77 @@
 </div>
 
 <style>
-    .whiteboards-page {
-        padding: 2rem;
-        font-family: sans-serif;
+    :root {
+        --primary: #ffc0cb;
+        --primary-hover: #f8b0bd;
+        --text: #333;
+        --muted: #777;
+        --bg: #fff0f5;
     }
-    
+
+    .whiteboards-page {
+        color:#ffe6ec;
+        padding: 2rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg);
+        min-height: 100vh;
+    }
+
     .container {
         max-width: 70vw;
         margin: 0 auto;
+        background-color: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
 
     .left-group {
         display: flex;
         align-items: center;
         gap: 1rem;
-    }
-
-    .username {
-        font-size: 1rem;
-        color: #666;
-    }
-
-    .left-group {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .username {
-        font-size: 1rem;
-        color: #666;
     }
 
     .header h1 {
-        font-size: 2rem;
-        font-weight: 400;
+        font-size: 2.2rem;
+        font-weight: 600;
+        color: var(--text);
     }
 
     .create-btn {
-        background-color: #e2e2e2;
+        background-color: var(--primary);
         border: none;
-        padding: 0.4rem 0.8rem;
-        border-radius: 8px;
-        font-weight: 800;
-        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 1rem;
         cursor: pointer;
+        color: white;
+        transition: background-color 0.2s ease;
     }
 
     .create-btn:hover {
-        background-color: #d0d0d0;
+        background-color: var(--primary-hover);
+    }
+
+    .username {
+        font-size: 1.5rem;
+        color: var(--muted);
+        text-shadow: #ffc0cb;
+        margin-right: 1rem;
     }
 
     .whiteboard-list {
         display: flex;
         flex-direction: column;
-        border-bottom: 1px solid #e0e0e0;
+        border-top: 1px solid #f0f0f0;
     }
 
     .whiteboard-entry {
@@ -149,41 +158,58 @@
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        border-top: 1px solid #e0e0e0;
-        padding: 0.75rem 0;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 1rem 0;
         font-size: 1rem;
         flex-wrap: wrap;
         text-decoration: none;
-        color: inherit;
+        color: var(--text);
+        transition: background-color 0.2s ease;
     }
 
     .whiteboard-entry:hover {
-        background-color: #f9f9f9;
+        background-color: #ffe6ec;
         cursor: pointer;
     }
 
     .info {
         display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-        align-items: baseline;
-    }
-
-    .title {
-        font-weight: 500;
+        flex-direction: column;
+        gap: 0.25rem;
         padding-left: 1rem;
     }
 
+    .title {
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
     .author {
-        color: #888;
-        font-size: 0.95rem;
-        font-weight: 400;
-        }
+        color: var(--muted);
+        font-size: 0.9rem;
+    }
 
     .updated {
-        font-size: 0.9rem;
-        font-size: 0.9rem;
-        color: #666;
+        font-size: 0.85rem;
+        color: var(--muted);
+        padding-right: 1rem;
     }
+
+    button {
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+
+    button:hover {
+        color: var(--primary-hover);
+    }
+
+    
 </style>
+
 
