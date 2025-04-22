@@ -11,6 +11,9 @@
 	import {PUBLIC_LOCALHOST_URL} from "$env/static/public";
 	import { getCookie } from "svelte-cookie";
 
+	let {data} = $props();
+	console.log(data)
+
 	let whiteboardElements = $state([]);
 	let currentTool = "text";
 	let currentlyModifyingElement = null;
@@ -88,7 +91,7 @@
 		window.exportData = exportData;
 		//load data
 		let userId = getCookie("userId");
-		fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboard/get?whiteboardId=${userId}`)
+		fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboard/get?whiteboardId=${data.id}`)
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);

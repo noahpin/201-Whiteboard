@@ -46,6 +46,7 @@ public class LoadWhiteboard extends HttpServlet {
 			out.close();
 			return;
 		}
+		setCorsHeaders(response);
 		
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -93,5 +94,11 @@ public class LoadWhiteboard extends HttpServlet {
 			out.close();
 		}
 	}
+    private void setCorsHeaders(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*"); // Svelte dev server
+        response.setHeader("Access-Control-Allow-Methods", "POST");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+    }
 
 }
