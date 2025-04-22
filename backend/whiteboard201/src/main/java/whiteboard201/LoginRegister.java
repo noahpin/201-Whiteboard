@@ -85,8 +85,19 @@ public class LoginRegister extends HttpServlet {
 				st.setString(2, inputPassword);
 				
 				st.executeUpdate();
-				
-				out.println("{\"message\": \"New account created successfully.\"}");
+
+				// Get the new userId (assumes username is unique)
+				st2 = conn.prepareStatement("SELECT userId FROM whiteboard201.users WHERE username = ? LIMIT 1");
+				st2.setString(1, inputUsername);
+				rs = st2.executeQuery();
+
+				if (rs.next()) {
+				    int userId = rs.getInt("userId");
+				    out.println("{\"userId\": " + userId + "}");
+				} else {
+				    out.println("{\"userId\": -1}"); // fallback if somehow not found
+				}
+
 				
 			} else if (option.equals("guest")) {
 				// TODO
