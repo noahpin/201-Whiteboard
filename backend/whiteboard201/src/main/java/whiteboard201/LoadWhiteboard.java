@@ -73,7 +73,7 @@ public class LoadWhiteboard extends HttpServlet {
 			st2 = conn.prepareStatement("SELECT userId, permissionLevel FROM whiteboard201.permissions WHERE whiteboardId = ?");
 			st2.setInt(1, whiteboardId);
 			
-			rs = st.executeQuery();
+			rs = st2.executeQuery();
 			
 			String json = "";
 			

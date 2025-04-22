@@ -8,6 +8,8 @@
 	import PenElementComponent from "$lib/components/PenElementComponent.svelte";
 	import { TextElement, PenElement } from "$lib/elements";
 	import { onMount } from "svelte";
+	import {PUBLIC_LOCALHOST_URL} from "$env/static/public";
+	import { getCookie } from "svelte-cookie";
 
 	let whiteboardElements = $state([]);
 	let currentTool = "text";
@@ -84,6 +86,17 @@
 	}
 	onMount(() => {
 		window.exportData = exportData;
+		//load data
+		let userId = getCookie("userId");
+		fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboard/get?whiteboardId=${userId}`)
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				importData(data);
+			})
+			.catch((error) => {
+				console.error("Error fetching whiteboards:", error);
+			});
 	});
 
 	function importData(data) {
