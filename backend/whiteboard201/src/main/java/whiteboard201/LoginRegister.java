@@ -105,7 +105,7 @@ public class LoginRegister extends HttpServlet {
 		}
 	}
     private void setCorsHeaders(HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5174"); // Svelte dev server
+        response.setHeader("Access-Control-Allow-Origin", "*"); // Svelte dev server
         response.setHeader("Access-Control-Allow-Methods", "POST");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Allow-Credentials", "true");
