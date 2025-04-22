@@ -1,8 +1,10 @@
 package whiteboard201;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+
+//new for changing to ensure can dump directly into sql database
+import java.sql.*;
+import java.time.LocalDateTime;
 
 import java.util.Map;
 
@@ -19,9 +21,11 @@ public class SaveWhiteboardServlet extends HttpServlet {
 
 	public static final long serialVersionUID = 1L;
 
-	private static final Path SAVE_DIR = Paths.get("/opt/whiteboards"); // on directory work i referenced this:
-																		// https://docs.oracle.com/javase/tutorial/essential/io/pathOps.html
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/whiteboard201";
+	private static final String DB_USER = "root";
+	private static final String DB_PASSWORD = "password_here";
 
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -30,7 +34,9 @@ public class SaveWhiteboardServlet extends HttpServlet {
 		String whiteboardIdInput = request.getParameter("id");
 
 		if (whiteboardIdInput == null || whiteboardIdInput.isEmpty()) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing whiteboard ID");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing whiteboard ID"); // all responses I
+																								// referenced this:
+																								// https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletResponse.html
 			return;
 		}
 
@@ -43,61 +49,101 @@ public class SaveWhiteboardServlet extends HttpServlet {
 			return;
 		}
 
-		//read raw JSON from request, use StringBuilder to get into a single string: https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html
+		// read raw JSON from request, use StringBuilder to get into a single string:
+		// https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html
 		Gson gson = new Gson();
 		StringBuilder sb = new StringBuilder();
+		BufferedReader reader = null;
 
-		try (BufferedReader reader = request.getReader()) {
+		try {
+			reader = request.getReader();
 			String line;
-			while (true) {
-				line = reader.readLine();
-				if (line == null) {
-					break;
-				}
+			while ((line = reader.readLine()) != null) {
 				sb.append(line);
+			}
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					System.err.println("Failed to close BufferedReader:");
+					e.printStackTrace();
+				}
 			}
 		}
 
+		String json = sb.toString();
+
 		// check if json is valid by trying to parse
 		try {
-			gson.fromJson(sb.toString(), JsonElement.class);
+			gson.fromJson(json, JsonElement.class);
 		} catch (JsonSyntaxException e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON format");
 			return;
 		}
 
-		// write to file if all worked
+		// save to sql database
 		try {
-			writeJsonFile(whiteboardId, sb.toString());
-		} catch (IOException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to write file");
+			updateWBinDB(whiteboardId, json);
+		} catch (SQLException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+					"Database update failed: " + e.getMessage());
 			return;
 		}
 
-		// note that everything worked
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
-		try (PrintWriter out = response.getWriter()) {
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
 			gson.toJson(Map.of("message", "Whiteboard saved successfully!"), out);
+		} finally {
+			if (out != null) {
+				out.close();
+			}
 		}
 
 	}
 
-	// helper function for writing the json file
-	private void writeJsonFile(int id, String json) throws IOException {
+	// helper function that saves (updates) whiteboard in the database
+	private void updateWBinDB(int whiteboardID, String json) throws SQLException {
 
-		Files.createDirectories(SAVE_DIR);
+		String updateQuery = "UPDATE whiteboards SET content = ?, updatedAt = ? WHERE whiteboardId = ?";
 
-		Path filePath = SAVE_DIR.resolve(id + ".json");
+		Connection conn = null;
+		PreparedStatement stmt = null;
 
-		
-		//use buffered bc large 
-		// also need to specify the charset since some of team has windows some has mac, just going to do to be safe
-		// found here and clicked through ;
-		// https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#newBufferedWriter-java.nio.file.Path-java.nio.charset.Charset-java.nio.file.OpenOption...-
-		try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
-			writer.write(json);
+		try {
+			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+			stmt = conn.prepareStatement(updateQuery);
+
+			stmt.setString(1, json);
+			stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+			stmt.setInt(3, whiteboardID);
+
+			int rowsAffected = stmt.executeUpdate();
+			if (rowsAffected == 0) {
+				throw new SQLException("No whiteboard found with ID: " + whiteboardID);
+			}
+
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					System.err.println("Failed to close PreparedStatement: ");
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.err.println("Failed to close Connection: ");
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }
