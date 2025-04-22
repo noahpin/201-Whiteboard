@@ -59,7 +59,7 @@ public class CreateWhiteboard extends HttpServlet {
 			
 			
 			st = conn.prepareStatement("INSERT INTO whiteboard201.whiteboards (userId, name, content, updatedAt) "
-					+ "VALUES (?, ?, '{}', ?)");
+					+ "VALUES (?, ?, '[]', ?)");
 			st.setInt(1, userId);
 			st.setString(2, name);
 			st.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));

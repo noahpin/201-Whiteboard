@@ -118,7 +118,6 @@
 		)
 			.then((response) => response.json())
 			.then((data) => {
-				// console.log(data);
 				importData(data.content);
 			})
 			.catch((error) => {
@@ -128,8 +127,9 @@
 
 	function saveData() {
 		let userId = getCookie("userId");
+		console.log(exportData());
 		fetch(
-			`${PUBLIC_LOCALHOST_URL}/whiteboard201/saveWhiteboard?id=${data.id}`,
+			`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboard/save?id=${data.id}`,
 			{
 				method: "POST",
 				body: JSON.stringify(exportData()),
@@ -140,6 +140,7 @@
 		)
 			.then((response) => response.json())
 			.then((data) => {
+				console.log(exportData());
 				console.log(data);
 			})
 			.catch((error) => {
@@ -151,6 +152,7 @@
 	function importData(data) {
 		whiteboardElements = [];
 		timestamp = Date.now();
+		if(!data) data = [];
 
 		whiteboardElements = data.map((element) => {
 			if (element.type === "text") {
