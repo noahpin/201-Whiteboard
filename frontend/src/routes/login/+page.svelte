@@ -38,6 +38,8 @@
           alert(`Login successful. User id: ${data.userId}`);
           setCookie("userId", data.userId);
           goto("/");
+        } else if (data.message) {
+          alert(data.message);
         } else {
           alert("Login failed. Please check your credentials.");
           deleteCookie("userId", "-1");
