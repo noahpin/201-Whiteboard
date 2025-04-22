@@ -88,10 +88,25 @@
       transition: border-color 0.3s;
     }
 
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+      transition: border-color 0.3s;
+    }
+
     input[type="text"]:focus {
       border:2px solid #FECFEF;
       outline: none;
     }
+
+    input[type="password"]:focus {
+      border:2px solid #FECFEF;
+      outline: none;
+    }
+
 
 .radio-group {
   margin-top: 15px;
@@ -161,7 +176,7 @@
     <!-- Validation for password, but doesn't work for guest 
          pattern="[A-Za-z ]{3,}" -->
     <label for="password">Password</label>
-    <input type="text" id="password" name="password" bind:value={password}  
+    <input type="password" id="password" name="password" bind:value={password}  
            placeholder="password1"><br><br>
 
     <!-- Radio buttons with checked attribute -->
