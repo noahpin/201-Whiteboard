@@ -46,7 +46,7 @@ public class LoginRegister extends HttpServlet {
 		}
 		
 		try {
-			conn = DriverManager.getConnection(DBCreds.DB_URL, DBCreds.DB_USER, "password");
+			conn = DriverManager.getConnection(DBCreds.DB_URL, DBCreds.DB_USER, DBCreds.DB_PASS);
 			if (option.equals("login")) {
 				st = conn.prepareStatement("SELECT * FROM whiteboard201.users WHERE username = ? AND password = ? LIMIT 1");
 				st.setString(1, inputUsername);
