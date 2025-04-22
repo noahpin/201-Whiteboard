@@ -58,7 +58,11 @@
     });
 
     async function createWhiteboard() {
-        const boardName = prompt("Enter whiteboard name:") || "Untitled Board";
+        const boardName = prompt("Enter whiteboard name:");
+        if (!boardName) {
+            alert("Whiteboard creation canceled.");
+            return;
+        }
 
         try {
             const response = await fetch(
