@@ -16,8 +16,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 
-@WebServlet("/saveWhiteboard")
-public class SaveWhiteboardServlet extends HttpServlet {
+@WebServlet("/whiteboard/save")
+public class SaveWhiteboard extends HttpServlet {
 
 	public static final long serialVersionUID = 1L;
 	
