@@ -109,9 +109,8 @@
 			method: "POST",
 			body: JSON.stringify(exportData()),
 			headers: {
-				"Content-Type": "application/json",
+				"Content-Type": "text/plain",
 			},
-			
 		})
 			.then((response) => response.json())
 			.then((data) => {
