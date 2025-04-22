@@ -8,29 +8,37 @@
  
  -->
 
- <script>
-	import { onMount } from "svelte";
-    import {PUBLIC_LOCALHOST_URL} from "$env/static/public"
+<script>
+    import { onMount } from "svelte";
+    import { PUBLIC_LOCALHOST_URL } from "$env/static/public";
     import { deleteCookie, getCookie } from "svelte-cookie";
-	import { goto } from "$app/navigation";
+    import { goto } from "$app/navigation";
 
     // Example Whiteboard Array with Dummy Values
-    let whiteboards = [
-    ];
+    let whiteboards = [];
 
-    let userId = "1" //dummy for now lol
+    let userId = "1"; //dummy for now lol
 
     onMount(() => {
         userId = getCookie("userId");
-        if(userId === undefined || userId === null || userId === "-1" || userId === "") {
+        if (
+            userId === undefined ||
+            userId === null ||
+            userId === "-1" ||
+            userId === ""
+        ) {
             console.log("User ID not found in cookies");
             goto("/login");
             return;
         }
         // Fetch whiteboards from the server
-        console.log(PUBLIC_LOCALHOST_URL)
-        console.log(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboards/get?userId=${userId}`)
-        fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboards/get?userId=${userId}`)
+        console.log(PUBLIC_LOCALHOST_URL);
+        console.log(
+            `${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboards/get?userId=${userId}`,
+        );
+        fetch(
+            `${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboards/get?userId=${userId}`,
+        )
             .then((response) => response.json())
             .then((data) => {
                 whiteboards = data.map((board) => {
@@ -39,25 +47,58 @@
                         title: board.boardName,
                         author: board.username,
                         updated: board.updatedAt.replace("?", " "),
-
-                }})
-                console.log(whiteboards, data)
-            // whiteboards = data;
+                    };
+                });
+                console.log(whiteboards, data);
+                // whiteboards = data;
             })
             .catch((error) => {
-            console.error("Error fetching whiteboards:", error);
+                console.error("Error fetching whiteboards:", error);
             });
     });
+
+    async function createWhiteboard() {
+        const boardName = prompt("Enter whiteboard name:") || "Untitled Board";
+
+        try {
+            const response = await fetch(
+                `${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboard/create?userId=${userId}&name=${encodeURIComponent(boardName)}`,
+                {
+                    method: "GET",
+                },
+            );
+
+            const result = await response.json();
+
+            if (result.message === "Success") {
+                alert("Whiteboard created! Refreshing list...");
+                location.reload(); // Or refetch whiteboards in-place
+            } else {
+                console.error("Create failed:", result.message);
+                alert("Failed to create whiteboard.");
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+            alert("Error creating whiteboard.");
+        }
+    }
 </script>
 
 <div class="whiteboards-page container">
     <div class="header">
         <div class="left-group">
             <h1>Whiteboards</h1>
-            <button class="create-btn">CREATE WHITEBOARD</button>
+            <button class="create-btn" on:click={createWhiteboard}
+                >CREATE WHITEBOARD</button
+            >
         </div>
         <div class="username">Username</div>
-        <button on:click={()=>{deleteCookie("userId"); goto("/login")}}>Log Out</button>
+        <button
+            on:click={() => {
+                deleteCookie("userId");
+                goto("/login");
+            }}>Log Out</button
+        >
     </div>
 
     <div class="whiteboard-list">
@@ -95,6 +136,7 @@
         background-color: var(--bg);
         min-height: 100vh;
     }
+
 
     .container {
         max-width: 70vw;
@@ -185,8 +227,9 @@
     }
 
     .author {
-        color: var(--muted);
-        font-size: 0.9rem;
+        color: #888;
+        font-size: 0.95rem;
+        font-weight: 400;
     }
 
     .updated {
@@ -211,5 +254,3 @@
 
     
 </style>
-
-
