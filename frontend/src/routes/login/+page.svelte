@@ -1,4 +1,5 @@
 <script>
+  import { PUBLIC_LOCALHOST_URL } from '$env/static/public';
     let username = '';
     let password = '';
     let action = 'register';
