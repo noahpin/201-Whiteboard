@@ -138,17 +138,19 @@
         padding: 2rem;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: var(--bg);
-        min-height: 100vh;
     }
 
 
     .container {
         max-width: 70vw;
+        height: 100%;
         margin: 0 auto;
         background-color: white;
         padding: 2rem;
         border-radius: 1rem;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        overflow: auto;
+        box-sizing: border-box;
     }
 
     .header {
