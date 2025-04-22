@@ -20,11 +20,6 @@ import com.google.gson.JsonSyntaxException;
 public class SaveWhiteboardServlet extends HttpServlet {
 
 	public static final long serialVersionUID = 1L;
-
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/whiteboard201";
-	private static final String DB_USER = "root";
-	private static final String DB_PASSWORD = "password_here";
-
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -115,7 +110,7 @@ public class SaveWhiteboardServlet extends HttpServlet {
 		PreparedStatement stmt = null;
 
 		try {
-			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+			conn = DriverManager.getConnection(DBCreds.DB_URL, DBCreds.DB_USER, DBCreds.DB_PASS);
 			stmt = conn.prepareStatement(updateQuery);
 
 			stmt.setString(1, json);
