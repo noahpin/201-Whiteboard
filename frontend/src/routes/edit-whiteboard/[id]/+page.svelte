@@ -217,6 +217,7 @@
 	<button onclick={addTextElementHandler}> Add TextBox 💬</button>
 	<button onclick={addBrushStrokeHandler}> Brush Stroke 🖌️</button>
 	<button onclick={addEraserHandler}> Erase ⌫</button>
+	<a href="/" class="home-btn"> Home 🏠</a>
 </div>
 
 <style>
@@ -244,4 +245,27 @@
 		font-size: 14px;
 		cursor: pointer;
 	}
+
+	.toolbar button,
+	.toolbar .home-btn {
+		padding: 6px 12px;
+		font-size: 14px;
+		cursor: pointer;
+		background-color: #cfcfcf;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		font-weight : bold;
+		text-decoration: none; /* important for <a> */
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.toolbar button:hover,
+	.toolbar .home-btn:hover {
+		background-color: #f5a4dc;
+	}
+
+
 </style>
