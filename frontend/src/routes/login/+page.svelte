@@ -53,6 +53,7 @@
 <head>
 <style>
     body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #FECFEF;
       display: flex;
       align-items: center;
