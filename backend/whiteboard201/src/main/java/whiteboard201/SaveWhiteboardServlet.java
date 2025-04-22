@@ -23,13 +23,13 @@ public class SaveWhiteboardServlet extends HttpServlet {
 
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/whiteboard201";
 	private static final String DB_USER = "root";
-	private static final String DB_PASSWORD = "password_here";
+	private static final String DB_PASSWORD = "root";
 
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		setCorsHeaders(response);
 		// get ID input from parameter input then check to make sure it works
 		String whiteboardIdInput = request.getParameter("id");
 
@@ -105,6 +105,13 @@ public class SaveWhiteboardServlet extends HttpServlet {
 		}
 
 	}
+
+    private void setCorsHeaders(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*"); // Svelte dev server
+        response.setHeader("Access-Control-Allow-Methods", "POST");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+    }
 
 	// helper function that saves (updates) whiteboard in the database
 	private void updateWBinDB(int whiteboardID, String json) throws SQLException {

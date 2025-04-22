@@ -89,18 +89,38 @@
 	}
 	onMount(() => {
 		window.exportData = exportData;
+		window.saveData = saveData;
 		//load data
 		let userId = getCookie("userId");
 		fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboard/get?whiteboardId=${data.id}`)
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
-				importData(data);
+				importData(data.content);
 			})
 			.catch((error) => {
 				console.error("Error fetching whiteboards:", error);
 			});
 	});
+
+	function saveData() {
+		let userId = getCookie("userId");
+		fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/saveWhiteboard?id=${data.id}`, {
+			method: "POST",
+			body: JSON.stringify(exportData()),
+			headers: {
+				"Content-Type": "application/json",
+			},
+			
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((error) => {
+				console.error("Error saving whiteboard:", error);
+			});
+	}
 
 	function importData(data) {
 		whiteboardElements = data.map((element) => {
