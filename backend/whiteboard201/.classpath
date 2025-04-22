@@ -13,9 +13,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry exported="true" kind="lib" path="/Users/xavierwisniewski/Desktop/servlet-api.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/xavierwisniewski/Desktop/mysql-connector-j-9.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/xavierwisniewski/Desktop/javax.websocket-api-1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/xavierwisniewski/Desktop/gson-2.13.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

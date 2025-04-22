@@ -18,7 +18,7 @@
       }
   
       try {
-        const response = await fetch("http://localhost:8080/whiteboard201/login/verify", { // Java dev server
+        const response = await fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/login/verify`, { // Java dev server
           method: "POST",
           body: new URLSearchParams({
             username,

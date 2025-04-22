@@ -10,6 +10,7 @@
 
  <script>
 	import { onMount } from "svelte";
+    import {PUBLIC_LOCALHOST_URL} from "$env/static/public"
 
     // Example Whiteboard Array with Dummy Values
     let whiteboards = [
@@ -19,8 +20,9 @@
 
     onMount(() => {
         // Fetch whiteboards from the server
-        console.log(`http://localhost:8080/whiteboard201/whiteboards/get?userId=${userId}`)
-        fetch(`http://localhost:8080/whiteboard201/whiteboards/get?userId=${userId}`)
+        console.log(PUBLIC_LOCALHOST_URL)
+        console.log(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboards/get?userId=${userId}`)
+        fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/whiteboards/get?userId=${userId}`)
             .then((response) => response.json())
             .then((data) => {
                 whiteboards = data.map((board) => {
