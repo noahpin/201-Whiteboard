@@ -57,11 +57,6 @@
             <button class="create-btn">CREATE WHITEBOARD</button>
         </div>
         <div class="username">Username</div>
-        <div class="left-group">
-            <h1>Whiteboards</h1>
-            <button class="create-btn">CREATE WHITEBOARD</button>
-        </div>
-        <div class="username">Username</div>
     </div>
 
     <div class="whiteboard-list">
