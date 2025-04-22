@@ -1,4 +1,8 @@
 <script>
+	import { goto } from '$app/navigation';
+  import { PUBLIC_LOCALHOST_URL } from '$env/static/public';
+  import {getCookie, setCookie, deleteCookie} from 'svelte-cookie';
+  
     let username = '';
     let password = '';
     let action = 'register';
@@ -18,7 +22,7 @@
       }
   
       try {
-        const response = await fetch("http://localhost:8080/whiteboard201/login/verify", { // Java dev server
+        const response = await fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/login/verify`, { // Java dev server
           method: "POST",
           body: new URLSearchParams({
             username,
@@ -32,9 +36,11 @@
   
         if (data.userId && data.userId !== -1) {
           alert(`Login successful. User id: ${data.userId}`);
-          // NAVIGATE TO HOME PAGE HERE
+          setCookie("userId", data.userId);
+          goto("/");
         } else {
           alert("Login failed. Please check your credentials.");
+          deleteCookie("userId", "-1");
         }
       } catch (err) {
         console.log(err)

@@ -21,6 +21,7 @@
 		"@tiptap/extension-placeholder": "^2.11.7",
 		"@tiptap/pm": "^2.11.7",
 		"@tiptap/starter-kit": "^2.11.7",
-		"perfect-freehand": "^1.2.2"
+		"perfect-freehand": "^1.2.2",
+		"svelte-cookie": "^1.0.1"
 	}
 }
