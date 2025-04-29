@@ -18,7 +18,7 @@
     let whiteboards = [];
 
     let userId = "1"; //dummy for now lol
-    let username = "";
+    let username = $state("");
 
     onMount(() => {
         userId = getCookie("userId");
@@ -110,6 +110,7 @@
                 >CREATE WHITEBOARD</button
             >
         </div>
+        <div class="username">{username}</div>
         <button
             on:click={() => {
                 deleteCookie("userId");
