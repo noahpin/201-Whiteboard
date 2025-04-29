@@ -107,12 +107,12 @@
 		return data;
 	}
 	let loadInterval = 0;
-	$inspect(loggedIn)
 	onMount(() => {
 		if (
 			getCookie("userId") === undefined ||
 			getCookie("userId") === null ||
-			getCookie("userId") === "-1"
+			getCookie("userId") === "-1" ||
+			getCookie("userId") === ""
 		) {
 			loggedIn = false;
 		} else {
