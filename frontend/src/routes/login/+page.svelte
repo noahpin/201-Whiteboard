@@ -63,12 +63,14 @@
     }
 
     form {
-      background: white;
-      padding: 30px 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      width: 350px;
-    }
+  background: white;
+  padding: 30px 65px 30px 40px; /* top, right, bottom, left */
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px; /* slightly wider */
+  box-sizing: border-box;
+}
 
     h1 {
       text-align: center;
@@ -80,6 +82,7 @@
       display: block;
       margin-top: 15px;
       font-weight: 500;
+      margin-left: 5px;
     }
 
     input[type="text"] {
