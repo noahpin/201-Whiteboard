@@ -56,7 +56,7 @@
             .catch((error) => {
                 console.error("Error fetching whiteboards:", error);
             });
-        fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/GetUsername?userId=${userId}`)
+        fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/username/get?userId=${userId}`)
             .then((res) => res.json())
             .then((data) => {
                 if(data.username) {

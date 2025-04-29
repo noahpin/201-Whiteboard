@@ -10,12 +10,14 @@
 	import { onMount, onDestroy } from "svelte";
 	import { PUBLIC_LOCALHOST_URL } from "$env/static/public";
 	import { deleteCookie, getCookie, setCookie } from "svelte-cookie";
+	import { page } from "$app/state";
 	// import { load } from "../+page.server.js";
 
 	let { data } = $props();
 	console.log(data);
 
 	let loggedIn = $state(false);
+	let loaded = $state(false);
 
 	let whiteboardElements = $state([]);
 	let currentTool = $state("text");
@@ -126,6 +128,7 @@
 			console.log("loading");
 			loadData();
 		}, 200);
+		loaded = true;
 	});
 
 	onDestroy(() => {
@@ -227,7 +230,7 @@
 	on:wheel|nonpassive={wheelHandler}
 />
 
-<div class="whiteboard" style:background-position={panX + "px " + panY + "px"}>
+<div  class="whiteboard" style:background-position={panX + "px " + panY + "px"}>
 	{#key timestamp}
 		{#each whiteboardElements as element, index}
 			<div>
@@ -260,10 +263,18 @@
 </div>
 {#if !guestMode}
 <div class="toolbar">
-	<button onclick={addTextElementHandler}> Add TextBox 💬</button>
+	<a href="/" class="home-btn"> Home 🏠</a>
+	<button onclick={addTextElementHandler}> Text 📝</button>
 	<button onclick={addBrushStrokeHandler}> Brush Stroke 🖌️</button>
 	<button onclick={addEraserHandler}> Erase ⌫</button>
-	<a href="/" class="home-btn"> Home 🏠</a>
+	<button 
+	style:margin-left="auto"
+	style:margin-right="30px"
+	style:float="right"
+    onclick={ () => {
+		navigator.clipboard.writeText(page.url.href);
+		alert("Link copied to clipboard!");
+	}}>Share</button>
 </div>
 {/if}
 {#if !loggedIn && !guestMode}
@@ -284,6 +295,10 @@
 <div class="guest-mode-wrapper">
 	<div class="guest-mode-highlight">You are currently viewing this project in Guest mode. <a href={"../login?redirect=" + data.id}>Log in to edit.</a></div>
 </div>
+{/if}
+
+{#if !loaded}
+<div class='hide'></div>
 {/if}
 
 <style>
@@ -356,11 +371,11 @@
 		padding: 6px 12px;
 		font-size: 14px;
 		cursor: pointer;
-		background-color: #cfcfcf;
-		color: white;
+		background: white;
+		color: black;
 		border: none;
 		border-radius: 5px;
-		font-weight: bold;
+		font-weight: normal;
 		text-decoration: none; /* important for <a> */
 		display: inline-flex;
 		align-items: center;
@@ -398,5 +413,18 @@
 	.guest-mode-highlight a {
 		color: black !important;
 		text-decoration: underline;
+	}
+	.hide {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgb(255, 255, 255);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 10000;
+		backdrop-filter: blur(5px);
 	}
 </style>

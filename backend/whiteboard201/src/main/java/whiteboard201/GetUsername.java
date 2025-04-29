@@ -19,16 +19,13 @@ import com.google.gson.Gson;
 /**
  * Servlet implementation class GetUsername
  */
-@WebServlet("/GetUsername")
+@WebServlet("/username/get")
 public class GetUsername extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
      */
-    public GetUsername() {
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
