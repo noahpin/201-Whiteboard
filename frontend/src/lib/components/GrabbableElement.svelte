@@ -9,6 +9,7 @@
 		panY = 0,
 		children,
 		elementData = $bindable(null),
+		guestMode = $bindable(false),
 		currentTool,
 		requestSave = void 0,
 		startEdit = void 0,
@@ -78,6 +79,7 @@
 
 <div
 	class="grabbable-wrapper"
+	style:pointer-events={guestMode ? "none" : "all"}
 	style:width={width + "px"}
 	style:height={height + "px"}
 	style:top={panY + elementY + "px"}
@@ -86,6 +88,7 @@
 	<div
 		class="grabbable-top"
 		onpointerdown={(e) => {
+			if(guestMode) return;
 			e.preventDefault();
 			pX = e.clientX;
 			pY = e.clientY;
@@ -101,6 +104,7 @@
 	<div
 		class="grabbable-corner"
 		onpointerdown={(e) => {
+			if(guestMode) return;
 			e.preventDefault();
 			pX = e.clientX;
 			pY = e.clientY;
@@ -119,6 +123,7 @@
 		style:bottom={"-12px"}
 		style:left={"-12px"}
 		onpointerdown={(e) => {
+			if(guestMode) return;
 			e.preventDefault();
 			pX = e.clientX;
 			pY = e.clientY;
@@ -134,6 +139,7 @@
 		style:top={"-12px"}
 		style:right={"-12px"}
 		onpointerdown={(e) => {
+			if(guestMode) return;
 			e.preventDefault();
 			pX = e.clientX;
 			pY = e.clientY;
@@ -149,6 +155,7 @@
 		style:bottom={"-12px"}
 		style:right={"-12px"}
 		onpointerdown={(e) => {
+			if(guestMode) return;
 			e.preventDefault();
 			pX = e.clientX;
 			pY = e.clientY;

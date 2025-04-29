@@ -6,6 +6,7 @@
 		panX = 0,
 		panY = 0,
 		elementData = $bindable(null),
+		guestMode = $bindable(false),
 		currentTool,
         requestEraseElement = void 0,
 	} = $props();

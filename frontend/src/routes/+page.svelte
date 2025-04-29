@@ -110,7 +110,6 @@
                 >CREATE WHITEBOARD</button
             >
         </div>
-        <div class="username">{username}</div>
         <button
             on:click={() => {
                 deleteCookie("userId");

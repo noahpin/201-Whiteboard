@@ -7,6 +7,7 @@
 		panX = 0,
 		panY = 0,
 		elementData = $bindable(null),
+		guestMode = $bindable(false),
 		requestSave = void 0,
 		startEdit = void 0,
 		endEdit = void 0,
@@ -64,7 +65,7 @@
     }
 }}/>
 
-<GrabbableElement {currentTool} {panX} {panY}
+<GrabbableElement bind:guestMode={guestMode} {currentTool} {panX} {panY}
 {startEdit}
 {endEdit} bind:elementData {requestSave}>
 	<div class="editor" bind:this={textEditor}
