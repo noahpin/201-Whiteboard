@@ -15,7 +15,7 @@
     import { goto } from "$app/navigation";
 
     // Example Whiteboard Array with Dummy Values
-    let whiteboards = [];
+    let whiteboards = $state([]);
 
     let userId = "1"; //dummy for now lol
     let username = $state("");
