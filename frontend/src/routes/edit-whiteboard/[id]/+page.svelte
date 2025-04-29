@@ -265,7 +265,7 @@
 <div class="toolbar">
 	<a href="/" class="home-btn"> Home 🏠</a>
 	<button onclick={addTextElementHandler}> Text 📝</button>
-	<button onclick={addBrushStrokeHandler}> Brush Stroke 🖌️</button>
+	<button onclick={addBrushStrokeHandler}> Brush 🖌️</button>
 	<button onclick={addEraserHandler}> Erase ⌫</button>
 	<button 
 	style:margin-left="auto"
