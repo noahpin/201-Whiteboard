@@ -1,2 +1,12 @@
-/.vscode
-/.idea
+# Ignore Eclipse project files
+.classpath
+.project
+.settings/
+
+# Ignore Mac system files
+.DS_Store
+
+# Ignore build output folders
+build/
+target/
+
