@@ -18,6 +18,7 @@
     let whiteboards = [];
 
     let userId = "1"; //dummy for now lol
+    let username = "";
 
     onMount(() => {
         userId = getCookie("userId");
@@ -54,6 +55,19 @@
             })
             .catch((error) => {
                 console.error("Error fetching whiteboards:", error);
+            });
+        fetch(`${PUBLIC_LOCALHOST_URL}/whiteboard201/GetUsername?userId=${userId}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if(data.username) {
+                    username = data.username;
+                }
+                else {
+                    console.warn("username not found");
+                }
+            })
+            .catch((err) => {
+                console.error("failed to fetch username", err);
             });
     });
 
@@ -96,7 +110,7 @@
                 >CREATE WHITEBOARD</button
             >
         </div>
-        <div class="username">Username</div>
+        <div class="username">{username}</div>
         <button
             on:click={() => {
                 deleteCookie("userId");
